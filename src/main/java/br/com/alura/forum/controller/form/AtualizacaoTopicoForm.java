@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.alura.forum.modelo.Topico;
-import br.com.alura.forum.repository.TopicoRepository;
+import br.com.alura.forum.model.Topic;
+import br.com.alura.forum.repository.TopicRepository;
 
 public class AtualizacaoTopicoForm {
 	
@@ -24,13 +24,13 @@ public class AtualizacaoTopicoForm {
 		this.mensagem = mensagem;
 	}
 
-	public Topico atualizar(Long id, TopicoRepository topicoRepository) {
-		Topico topico = topicoRepository.getOne(id);
+	public Topic atualizar(Long id, TopicRepository topicRepository) {
+		Topic topic = topicRepository.getOne(id);
 		
-		topico.setTitulo(this.titulo);
-		topico.setMensagem(this.mensagem);
+		topic.setTitle(this.titulo);
+		topic.setMessage(this.mensagem);
 		
-		return topico;
+		return topic;
 	}
 	
 }

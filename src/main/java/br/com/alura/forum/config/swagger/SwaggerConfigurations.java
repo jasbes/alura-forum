@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import br.com.alura.forum.modelo.Usuario;
+import br.com.alura.forum.model.Author;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,7 +23,7 @@ public class SwaggerConfigurations {
 				.apis(RequestHandlerSelectors.basePackage("br.com.alura.forum"))
 				.paths(PathSelectors.ant("/**"))
 				.build()
-				.ignoredParameterTypes(Usuario.class)
+				.ignoredParameterTypes(Author.class)
 				.globalOperationParameters(Arrays.asList(
 						new ParameterBuilder()
 						.name("Authorization")

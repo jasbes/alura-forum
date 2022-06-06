@@ -1,9 +1,9 @@
 package br.com.alura.forum.controller;
 
 import br.com.alura.forum.config.security.TokenService;
-import br.com.alura.forum.controller.dto.TokenDto;
+import br.com.alura.forum.controller.dto.TokenDTO;
 import br.com.alura.forum.controller.form.LoginForm;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,24 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @Profile("prod")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
-public class AutenticacaoController {
+public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authManager;
+    private final AuthenticationManager authManager;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginForm form) {
-        UsernamePasswordAuthenticationToken dadosLogin = form.converter();
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody @Valid LoginForm form) {
+        UsernamePasswordAuthenticationToken loginData = form.converter();
 
         try {
-            Authentication authentication = authManager.authenticate(dadosLogin);
+            Authentication authentication = authManager.authenticate(loginData);
             String token = tokenService.gerarToken(authentication);
-            return ResponseEntity.ok(new TokenDto(token, "Bearer"));
+            return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
         }
